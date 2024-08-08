@@ -3,7 +3,7 @@
 session_start();
 
 # DB configs and creds
-$servername = "127.0.0.1";
+$servername = "localhost";
 $username = "root";
 $password = "";
 $dbname = "facebook";
