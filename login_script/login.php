@@ -29,27 +29,28 @@ if (empty($email) || empty($password)) {
 # Prepare the SQL query to check for the user
 $sql = "SELECT id, email, password FROM users WHERE email = ?";
 $stmt = $conn->prepare($sql);
+if ($stmt === false) {
+    die("Error preparing statement: " . $conn->error);
+}
 $stmt->bind_param("s", $email);
 $stmt->execute();
 $result = $stmt->get_result();
 
-
 # Check if the user exists and verify the password
 if ($result->num_rows > 0) {
     $row = $result->fetch_assoc();
-    if ($password === $row['password']) {
+    if ($password === $row['password']) {  # This is insecure, just for testing
         # Password is correct, set session variables
         $_SESSION['user_id'] = $row['id'];
         $_SESSION['email'] = $row['email'];
-        // echo "Login successful. Welcome, " . $row['email'] . "!";
-
+        
         echo "<script>
             alert('Login successful. Welcome, " . $row['email'] . "!');
-            window.location.href = '../index.htm';
+            window.location.href = '../index.html';
         </script>";
 
-        # Redirect to the dashboard or another page
-        header("Location: ../index.html");
+        # Redirect to the dashboard or another page once completed
+        // header("Location: ../index.html");
         exit();
     } else {
         echo "Invalid password.";
@@ -61,8 +62,6 @@ if ($result->num_rows > 0) {
 # Close the statement and connection
 $stmt->close();
 $conn->close();
-
-
 
 
 ?>
