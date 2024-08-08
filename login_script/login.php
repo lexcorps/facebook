@@ -6,7 +6,7 @@ session_start();
 $servername = "127.0.0.1";
 $username = "root";
 $password = "";
-$dbname = "facebook_clone";
+$dbname = "facebook";
 
 # Instantiate connection
 $conn = new mysqli($servername, $username, $password, $dbname);
